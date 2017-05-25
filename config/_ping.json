@@ -1,0 +1,6 @@
+{
+  "code": "_ping",
+  "name": "Ping Test",
+  "web": "https://www.google.com",
+  "enabled": false
+}
