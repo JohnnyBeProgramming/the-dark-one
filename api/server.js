@@ -22,7 +22,7 @@ module.exports = api
     // Load main server last, so the tools gets preference
     {
       target: '/',
-      source: 'app'
+      source: '../app'
     }
   ])
   .start(function () {
