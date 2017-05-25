@@ -4,7 +4,7 @@
 const api = require('./api');
 const express = require('express');
 
-const InstanceService = require('./api/services/InstanceService');
+const InstanceService = require('./services/InstanceService');
 
 const options = {
   base: __dirname,
