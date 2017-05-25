@@ -6,12 +6,17 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="has-header" padding>
+  <div class="button-bar">
+    <button class="button button-dark button-block">Sync Up</button>
+    <button class="button button-stable button-block">Sync Down</button>
+  </div>
   <ion-list>
-    <ion-list-header>Follow us on Twitter</ion-list-header>
-    <ion-item>
-      <ion-icon name="ionic" item-left></ion-icon>
-      @ionicframework
-    </ion-item>
+    <div class="item item-body">
+      <div class="show-list-numbers-and-dots">
+        <p>
+          <strong>Note:</strong> Local changes were detected.</p>
+      </div>
+    </div>
   </ion-list>
 </ion-content>
