@@ -6,7 +6,7 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
   <ion-segment [(ngModel)]="category">
     <ion-segment-button value="">
       All
@@ -25,9 +25,6 @@
   <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
 
   <ion-list>
-    <ion-list-header>
-      Found <strong>{{ items.length }}</strong> search results
-    </ion-list-header>
     <ion-item *ngFor="let item of items" [hidden]="category && item.category !== category">
       <ion-thumbnail item-left>
         <img *ngIf="item.image" src="{{ item.image }}">

@@ -6,7 +6,7 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content class="has-header" padding>
+<ion-content>
   <ion-segment [(ngModel)]="direction">
     <ion-segment-button value="">
       All
@@ -21,19 +21,19 @@
 
   <div [ngSwitch]="direction">
     <div *ngSwitchDefault>
-      <button ion-button block (click)="openMenu()">
+      <button ion-button block (click)="syncAll()">
         <ion-icon name="cloud"></ion-icon> &nbsp;
         Synchronise All
       </button>
     </div>
     <div *ngSwitchCase="'uploads'">
-      <button ion-button block (click)="captureLocation()">
+      <button ion-button block (click)="syncUp()">
         <ion-icon name="cloud-upload"></ion-icon> &nbsp;
         Sync Uploads
       </button>
     </div>
     <div *ngSwitchCase="'downloads'">
-      <button ion-button block (click)="capturePicture()">
+      <button ion-button block (click)="syncDown()">
         <ion-icon name="cloud-download"></ion-icon> &nbsp;
         Sync Downloads
       </button>

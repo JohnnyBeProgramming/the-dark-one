@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import {Component} from '@angular/core';
+import {NavController} from 'ionic-angular';
 
 @Component({
   selector: 'page-sync',
@@ -44,6 +44,18 @@ export class SyncPage {
         text: 'Check online for any updates',
       },
     ];
+  }
+
+  syncAll() {
+    this.items = this.items.filter((item) => false);
+  }
+
+  syncUp() {
+    this.items = this.items.filter((item) => item.dir === 'downloads');
+  }
+
+  syncDown() {
+    this.items = this.items.filter((item) => item.dir === 'uploadss');
   }
 
 }

@@ -10,6 +10,7 @@ const ninja = 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4QBgRXhpZgAASU
 })
 export class CapturePage {
 
+  public category: string = '';
   public eventList: any[] = [];
 
   constructor(public navCtrl: NavController,

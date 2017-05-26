@@ -4,16 +4,12 @@ $font-path: "../assets/fonts";
 
 @import "ionic.globals";
 
-
 // Shared Variables
 // --------------------------------------------------
 // To customize the look and feel of this app, you can override
 // the Sass variables found in Ionic's source scss files.
 // To view all the possible Ionic variables, see:
 // http://ionicframework.com/docs/v2/theming/overriding-ionic-variables/
-
-
-
 
 // Named Color Variables
 // --------------------------------------------------
@@ -24,34 +20,55 @@ $font-path: "../assets/fonts";
 // The "primary" color is the only required color in the map.
 
 $colors: (
-  primary:    #488aff,
-  secondary:  #32db64,
-  danger:     #f53d3d,
-  light:      #f4f4f4,
-  dark:       #222
+  primary: #2c3e50,
+  secondary: #f39c12,
+  danger: #f53d3d,
+  light: #f4f4f4,
+  dark: #222
 );
 
+$positive: #2c3e50 !default; /* (Define your desired color in SCSS) */
+
+// Use the primary color as the background for the toolbar-md-background
+$toolbar-md-background: color($colors, primary);
+
+// Use the default background for the tabbar since it inherits from toolbar
+$tabbar-md-background: color($colors, primary);
+
+// Change the color of the tabs text
+$tab-button-md-active-color: color($colors, primary);
+$tab-button-md-inactive-color: #8c8c8c;
+
+// Change the color of the segment button text
+// $toolbar-md-active-color: #fce515;
+// $toolbar-md-inactive-color: #fff;
+// $segment-button-md-text-color-activated: #fff;
+
+.tabs-dark .tab-button {
+  color: color($colors, light) !important;
+  background-color: color($colors, primary) !important;
+}
+
+.tabs-dark .tab-button .tab-button-icon {
+  color: color($colors, light) !important;
+}
+
+//selected color
+.tabs-dark .tab-button[aria-selected=true], .tabs-md .tab-button[aria-selected=true] .tab-button-icon {
+  color: color($colors, secondary) !important;
+}
 
 // App iOS Variables
 // --------------------------------------------------
 // iOS only Sass variables can go here
 
-
-
-
 // App Material Design Variables
 // --------------------------------------------------
 // Material Design only Sass variables can go here
 
-
-
-
 // App Windows Variables
 // --------------------------------------------------
 // Windows only Sass variables can go here
-
-
-
 
 // App Theme
 // --------------------------------------------------
@@ -62,14 +79,12 @@ $colors: (
 
 @import "ionic.theme.default";
 
-
 // Ionicons
 // --------------------------------------------------
 // The premium icon font for Ionic. For more info, please see:
 // http://ionicframework.com/docs/v2/ionicons/
 
 @import "ionic.ionicons";
-
 
 // Fonts
 // --------------------------------------------------
