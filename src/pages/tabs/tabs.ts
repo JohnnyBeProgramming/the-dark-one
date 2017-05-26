@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 import { HomePage } from '../home/home';
 import { CapturePage } from '../capture/capture';
-import { ToolsPage } from '../tools/tools';
+import { FeaturesPage } from '../features/features';
 import { SyncPage } from '../sync/sync';
 import { AboutPage } from '../about/about';
 
@@ -13,7 +13,7 @@ export class TabsPage {
 
   tab1Root = HomePage;
   tab2Root = CapturePage;
-  tab3Root = ToolsPage;
+  tab3Root = FeaturesPage;
   tab4Root = SyncPage;
   tab5Root = AboutPage;
 

@@ -6,7 +6,7 @@ import {MyApp} from './app.component';
 import {TabsPage} from '../pages/tabs/tabs';
 import {HomePage} from '../pages/home/home';
 import {CapturePage} from '../pages/capture/capture';
-import {ToolsPage} from '../pages/tools/tools';
+import {FeaturesPage} from '../pages/features/features';
 import {SyncPage} from '../pages/sync/sync';
 import {AboutPage} from '../pages/about/about';
 
@@ -18,7 +18,7 @@ import {SplashScreen} from '@ionic-native/splash-screen';
     MyApp,
     HomePage,
     CapturePage,
-    ToolsPage,
+    FeaturesPage,
     SyncPage,
     AboutPage,
     TabsPage
@@ -32,7 +32,7 @@ import {SplashScreen} from '@ionic-native/splash-screen';
     MyApp,
     HomePage,
     CapturePage,
-    ToolsPage,
+    FeaturesPage,
     SyncPage,
     AboutPage,
     TabsPage

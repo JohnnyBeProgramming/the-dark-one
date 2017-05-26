@@ -7,8 +7,43 @@ import { NavController } from 'ionic-angular';
 })
 export class SyncPage {
 
-  constructor(public navCtrl: NavController) {
+  direction: string = '';
+  items: any[] = [];
 
+  constructor(public navCtrl: NavController) {
+    this.initializeItems();
+  }
+
+  initializeItems() {
+    this.items = [
+      {
+        dir: 'uploads',
+        type: 'location',
+        title: 'Johnny checked in',
+        text: 'Brussels, Belgium',
+        image: null,
+      },
+      {
+        dir: 'uploads',
+        type: 'picture',
+        title: 'Captured Image',
+        text: 'This image was captured at 14:21 PM on the 25\'th of May 2017.',
+        image: null,
+      },
+      {
+        dir: 'uploads',
+        type: 'barcode',
+        title: 'Scanned Barcode',
+        text: '7826348721394',
+      },
+      {
+        dir: 'downloads',
+        type: 'update',
+        icon: 'cloud-download',
+        title: 'Check for updates...',
+        text: 'Check online for any updates',
+      },
+    ];
   }
 
 }
