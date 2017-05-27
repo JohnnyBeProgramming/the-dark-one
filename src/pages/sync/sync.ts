@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {NavController} from 'ionic-angular';
+import {SyncService, ISyncItem} from "../../services/sync.service";
 
 @Component({
   selector: 'page-sync',
@@ -7,55 +8,58 @@ import {NavController} from 'ionic-angular';
 })
 export class SyncPage {
 
+  loading: boolean = false;
   direction: string = '';
-  items: any[] = [];
+  items: ISyncItem[] = [];
 
-  constructor(public navCtrl: NavController) {
-    this.initializeItems();
-  }
+  constructor(public navCtrl: NavController,
+              public syncService: SyncService) {
 
-  initializeItems() {
-    this.items = [
-      {
-        dir: 'uploads',
-        type: 'location',
-        title: 'Johnny checked in',
-        text: 'Brussels, Belgium',
-        image: null,
-      },
-      {
-        dir: 'uploads',
-        type: 'picture',
-        title: 'Captured Image',
-        text: 'This image was captured at 14:21 PM on the 25\'th of May 2017.',
-        image: null,
-      },
-      {
-        dir: 'uploads',
-        type: 'barcode',
-        title: 'Scanned Barcode',
-        text: '7826348721394',
-      },
-      {
-        dir: 'downloads',
-        type: 'update',
-        icon: 'cloud-download',
-        title: 'Check for updates...',
-        text: 'Check online for any updates',
-      },
-    ];
+    // Load the pending items (async)
+    this.loading = true;
+    this.syncService
+      .getSyncItems()
+      .then((results: ISyncItem[]) => {
+        this.items = results;
+        this.loading = false;
+      });
+
   }
 
   syncAll() {
-    this.items = this.items.filter((item) => false);
+    this.loading = true;
+    this.syncService
+      .syncAll()
+      .then((synced: ISyncItem[]) => {
+        this.items = this.items.filter(item => {
+          return synced.indexOf(item) < 0;
+        });
+        this.loading = false;
+      });
   }
 
   syncUp() {
-    this.items = this.items.filter((item) => item.dir === 'downloads');
+    this.loading = true;
+    this.syncService
+      .syncUp()
+      .then((synced: ISyncItem[]) => {
+        this.items = this.items.filter(item => {
+          return synced.indexOf(item) < 0;
+        });
+        this.loading = false;
+      });
   }
 
   syncDown() {
-    this.items = this.items.filter((item) => item.dir === 'uploadss');
+    this.loading = true;
+    this.syncService
+      .syncDown()
+      .then((synced: ISyncItem[]) => {
+        this.items = this.items.filter(item => {
+          return synced.indexOf(item) < 0;
+        });
+        this.loading = false;
+      });
   }
 
 }

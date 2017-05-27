@@ -12,6 +12,9 @@ import {AboutPage} from '../pages/about/about';
 
 import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
+import {FeatureService} from "../services/feature.service";
+import {CaptureService} from "../services/capture.service";
+import {SyncService} from "../services/sync.service";
 
 @NgModule({
   declarations: [
@@ -43,7 +46,10 @@ import {SplashScreen} from '@ionic-native/splash-screen';
     {
       provide: ErrorHandler,
       useClass: IonicErrorHandler
-    }
+    },
+    CaptureService,
+    FeatureService,
+    SyncService
   ]
 })
 export class AppModule {
