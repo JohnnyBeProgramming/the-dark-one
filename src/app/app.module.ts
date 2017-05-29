@@ -15,6 +15,7 @@ import {SplashScreen} from '@ionic-native/splash-screen';
 import {FeatureService} from "../services/feature.service";
 import {CaptureService} from "../services/capture.service";
 import {SyncService} from "../services/sync.service";
+import {StorageService} from "../services/storage.service";
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import {SyncService} from "../services/sync.service";
     },
     CaptureService,
     FeatureService,
-    SyncService
+    SyncService,
+    StorageService
   ]
 })
 export class AppModule {
