@@ -8,6 +8,7 @@ import {IonicApp, IonicModule, IonicErrorHandler} from 'ionic-angular';
 import {MyApp} from './app.component';
 import {routing} from './app.routing';
 
+import {IndexPage} from '../pages/index';
 import {TabsPage} from '../pages/tabs/tabs';
 import {HomePage} from '../pages/home/home';
 import {CapturePage} from '../pages/capture/capture';
@@ -33,10 +34,11 @@ import {AuthGuard} from '../routes/auth.gaurd';
     FormsModule,
     HttpModule,
     IonicModule.forRoot(MyApp),
-    //routing
+    routing
   ],
   declarations: [
     MyApp,
+    IndexPage,
     HomePage,
     LoginPage,
     CapturePage,
@@ -48,6 +50,7 @@ import {AuthGuard} from '../routes/auth.gaurd';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
+    IndexPage,
     HomePage,
     LoginPage,
     CapturePage,
