@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import {Component} from '@angular/core';
+import {AuthenticationService} from "../../services/auth.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'page-about',
@@ -7,8 +8,17 @@ import { NavController } from 'ionic-angular';
 })
 export class AboutPage {
 
-  constructor(public navCtrl: NavController) {
+  constructor(private router: Router,
+              private authenticationService: AuthenticationService) {
+  }
 
+  logout() {
+    if (confirm('Are you sure you want to log out?')) {
+      localStorage.removeItem('currentUser');
+      this.authenticationService.logout();
+      //this.router.navigate(['/login']);
+      location.reload(true);
+    }
   }
 
 }

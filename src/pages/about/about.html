@@ -6,6 +6,13 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <em>This app was generated with the Ionic Framework.</em>
+<ion-content layout="column" flex>
+  <div padding>
+    <button ion-button (click)="logout()" block>
+      Disconnect
+    </button>
+  </div>
+  <div padding flex>
+    <em>This app was generated with the Ionic Framework.</em>
+  </div>
 </ion-content>
