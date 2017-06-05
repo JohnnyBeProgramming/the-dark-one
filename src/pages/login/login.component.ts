@@ -22,22 +22,6 @@ export class LoginPage implements OnInit {
 
   login() {
     this.loading = true;
-
-    // ---------------------------------------------------------
-    // ToDo: Remove temp code....
-    // ---------------------------------------------------------
-    if (this.model.username && this.model.password) {
-      const token = JSON.stringify({
-        username: this.model.username,
-        token: ""
-      });
-      localStorage.setItem('currentUser', token);
-      this.authenticationService.token = token;
-      this.router.navigate(['/']);
-      return true;
-    }
-    // ---------------------------------------------------------
-
     this.authenticationService.login(this.model.username, this.model.password)
       .subscribe(result => {
         if (result === true) {

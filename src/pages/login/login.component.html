@@ -9,16 +9,30 @@
   <form (ngSubmit)="login()">
     <ion-item>
       <ion-label>Username</ion-label>
-      <ion-input type="text" [(ngModel)]="model.username" name="username" tabindex="0"></ion-input>
+      <ion-input type="text"
+                 name="username"
+                 tabindex="0"
+                 [(ngModel)]="model.username"
+                 [disabled]="loading"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label>Password</ion-label>
-      <ion-input type="text" [(ngModel)]="model.password" name="password"></ion-input>
+      <ion-input type="password"
+                 name="password"
+                 [(ngModel)]="model.password"
+                 [disabled]="loading"></ion-input>
     </ion-item>
-    <button ion-button type="submit" block>Login</button>
+    <button ion-button type="submit"
+            [disabled]="loading"
+            block>
+      Login
+    </button>
+    <div class="md-warn" [hidden]="!error || !error.message">
+      {{ error.message }}
+    </div>
     <hr/>
-    <button ion-button disabled block>Google</button>
-    <button ion-button disabled block>Facebook</button>
+    <button ion-button [disabled]="true || loading" block>Google</button>
+    <button ion-button [disabled]="true || loading" block>Facebook</button>
   </form>
 </ion-content>
 
