@@ -14,6 +14,14 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       statusBar.backgroundColorByHexString("#2c3e50");
+
+      // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+      // for form inputs)
+      if(window['cordova'] && window['cordova'].plugins.Keyboard) {
+        window['cordova'].plugins.Keyboard.hideKeyboardAccessoryBar(true);
+      }
+
+      // Show the contents...
       splashScreen.hide();
     });
   }

@@ -1,11 +1,16 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>User Login</ion-title>
+    <ion-title>
+      <ion-icon name="contact"></ion-icon>
+      <span style="padding-left: 6px">User Login</span>
+    </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding="true" class="has-header">
-  <h2>Identify Yourself</h2>
+  <h2>
+    Identify Yourself
+  </h2>
   <form (ngSubmit)="login()">
     <ion-item>
       <ion-label>Username</ion-label>
@@ -31,8 +36,14 @@
       {{ error.message }}
     </div>
     <hr/>
-    <button ion-button [disabled]="true || loading" block>Google</button>
-    <button ion-button [disabled]="true || loading" block>Facebook</button>
+    <button ion-button [disabled]="loading" (click)="login('google')" block>
+      <ion-icon name="logo-google"></ion-icon>
+      <span style="padding-left: 8px">Google</span>
+    </button>
+    <button ion-button [disabled]="loading" (click)="login('facebook')" block>
+      <ion-icon name="logo-facebook"></ion-icon>
+      <span style="padding-left: 8px">Facebook</span>
+    </button>
   </form>
 </ion-content>
 

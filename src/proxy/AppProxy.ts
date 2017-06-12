@@ -1,8 +1,8 @@
 import {Http, BaseRequestOptions, Response, ResponseOptions, RequestMethod, RequestOptions} from '@angular/http';
 import {MockBackend, MockConnection} from '@angular/http/testing';
 
+// Use proxy client in place of Http service for backend-less offline functionality
 export let AppProxy = {
-  // Use proxy client in place of Http service for backend-less offline functionality
   provide: Http,
   useFactory: (backend: MockBackend, options: BaseRequestOptions) => {
     // Configure the proxy services
