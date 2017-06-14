@@ -6,6 +6,51 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <em>This app was generated with the Ionic Framework.</em>
+<ion-content layout="column" flex>
+  <div *ngIf="!authService.currentUser || authService.currentUser.isAnonymous">
+    <div class="show-list-numbers-and-dots">
+      <p>
+        <button ion-button
+                (click)="login()"
+                [disabled]="loading"
+                block>
+          Login
+        </button>
+      </p>
+      <p>
+        Please sign in to access your personalised features.
+      </p>
+    </div>
+  </div>
+  <div *ngIf="authService.currentUser && !authService.currentUser.isAnonymous">
+    <div id="profile-info">
+      <img id="profile-image" [src]="authService.currentUser.photoURL || imageDefault">
+      <h3 id="profile-name">
+        {{ authService.currentUser.displayName || 'Unknown User' }}
+      </h3>
+      <div id="profile-description" *ngIf="authService.currentUser.email">
+        Email: <a href="mailto:{{ authService.currentUser.email }}">{{ authService.currentUser.email }}</a>
+      </div>
+    </div>
+    <div padding>
+      <button ion-button (click)="logout()" block>
+        Disconnect
+      </button>
+    </div>
+  </div>
+
+  <div>
+    <hr/>
+    <div padding flex>
+      This is a little <strong>prototype</strong> app that explores mobile concepts and integrations.
+    </div>
+    <hr/>
+    <div padding>
+      <em>This app was generated with the Ionic Framework.</em>
+    </div>
+  </div>
+
+  <div id="footer">
+    Made with &hearts; & passion by code monkeys...
+  </div>
 </ion-content>

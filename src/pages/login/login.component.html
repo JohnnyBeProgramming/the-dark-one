@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      <ion-icon name="contact"></ion-icon>
+      <span style="padding-left: 6px">User Login</span>
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding="true" class="has-header">
+  <h2>
+    Identify Yourself
+  </h2>
+  <form>
+    <ion-item>
+      <ion-label>Username</ion-label>
+      <ion-input type="text"
+                 name="username"
+                 tabindex="0"
+                 [(ngModel)]="model.username"
+                 [disabled]="loading"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Password</ion-label>
+      <ion-input type="password"
+                 name="password"
+                 [(ngModel)]="model.password"
+                 [disabled]="loading"></ion-input>
+    </ion-item>
+    <button ion-button type="submit"
+            (click)="login()"
+            [disabled]="loading"
+            block>
+      Login
+    </button>
+    <hr/>
+    <button ion-button [disabled]="loading" (click)="login('google')" block>
+      <ion-icon name="logo-google"></ion-icon>
+      <span style="padding-left: 8px">Google</span>
+    </button>
+    <button ion-button [disabled]="loading" (click)="login('facebook')" block>
+      <ion-icon name="logo-facebook"></ion-icon>
+      <span style="padding-left: 8px">Facebook</span>
+    </button>
+  </form>
+  <div style="color: darkred; position: absolute; bottom: 0; left: 0; right: 0;" [hidden]="!error" padding>
+    {{ error && error.message ? error.message : 'Oops! Something went wrong. :/' }}
+  </div>
+</ion-content>
+
+
