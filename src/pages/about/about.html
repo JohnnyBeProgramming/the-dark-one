@@ -9,26 +9,32 @@
 <ion-content layout="column" flex>
   <div *ngIf="!authService.currentUser || authService.currentUser.isAnonymous">
     <div class="show-list-numbers-and-dots">
-      <p>
-        Please sign in to access your personalised features.
-      </p>
-      <p>
+      <div class="profile-info">
+        <img class="profile-image" [src]="imageDefault">
+        <h3 class="profile-name">
+          Unknown User
+        </h3>
+        <div class="profile-description">
+          Please sign in to access your personalised features.
+        </div>
+      </div>
+      <div padding>
         <button ion-button
                 (click)="login()"
                 [disabled]="loading"
                 block>
           Login
         </button>
-      </p>
+      </div>
     </div>
   </div>
   <div *ngIf="authService.currentUser && !authService.currentUser.isAnonymous">
-    <div id="profile-info">
-      <img id="profile-image" [src]="authService.currentUser.photoURL || imageDefault">
-      <h3 id="profile-name">
+    <div class="profile-info">
+      <img class="profile-image" [src]="authService.currentUser.photoURL || imageDefault">
+      <h3 class="profile-name">
         {{ authService.currentUser.displayName || 'Unknown User' }}
       </h3>
-      <div id="profile-description" *ngIf="authService.currentUser.email">
+      <div class="profile-description" *ngIf="authService.currentUser.email">
         Email: <a href="mailto:{{ authService.currentUser.email }}">{{ authService.currentUser.email }}</a>
       </div>
     </div>
@@ -50,7 +56,7 @@
     </div>
   </div>
 
-  <div id="footer">
+  <div class="footer">
     Made with &hearts; by code monkeys...
   </div>
 </ion-content>
