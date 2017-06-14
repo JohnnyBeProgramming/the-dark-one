@@ -39,6 +39,7 @@ import {FeatureService} from "../services/feature.service";
 import {CaptureService} from "../services/capture.service";
 import {SyncService} from "../services/sync.service";
 import {StorageService} from "../services/storage.service";
+import {MenuService} from "../providers/menu-service/menu-service";
 
 @NgModule({
   imports: [
@@ -88,6 +89,7 @@ import {StorageService} from "../services/storage.service";
     BaseRequestOptions,
     AngularFireAuth,
     AuthService,
+    MenuService,
     AuthGuard
   ]
 })
