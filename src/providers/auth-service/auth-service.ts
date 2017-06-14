@@ -17,6 +17,12 @@ export class AuthService {
     return this.currentUser !== null;
   }
 
+  getUser() {
+    return new Promise((resolve, reject) => {
+      this.afAuth.authState.subscribe((user: firebase.User) => resolve(user));
+    });
+  }
+
   login(provider: string, model: any = {}) {
     return Promise.resolve(model || {})
       .then((args: any) => {

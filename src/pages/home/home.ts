@@ -10,11 +10,15 @@ import {resources} from "../../app/app.resources";
 })
 export class HomePage {
 
-  public loading: boolean;
+  public loading: boolean = true;
   public imageDefault: string = resources.imageDefault;
 
   constructor(private router: Router,
               public authService: AuthService) {
+    this.authService.getUser()
+      .then((user) => {
+        this.loading = false;
+      })
   }
 
   login() {
@@ -23,14 +27,10 @@ export class HomePage {
     this.router.navigate(['/login']);
   }
 
-  logout() {
-    if (confirm('Are you sure you want to log out?')) {
-      this.authService.signOut()
-        .then(() => {
-          this.router.navigate(['/login']);
-          location.reload(true);
-        });
-    }
+  showUserInfo() {
+    // not logged in so redirect to login page
+    this.loading = true;
+    this.router.navigate(['/about']);
   }
 
 }

@@ -10,15 +10,15 @@
   <div *ngIf="!authService.currentUser || authService.currentUser.isAnonymous">
     <div class="show-list-numbers-and-dots">
       <p>
+        Please sign in to access your personalised features.
+      </p>
+      <p>
         <button ion-button
                 (click)="login()"
                 [disabled]="loading"
                 block>
           Login
         </button>
-      </p>
-      <p>
-        Please sign in to access your personalised features.
       </p>
     </div>
   </div>
@@ -51,6 +51,6 @@
   </div>
 
   <div id="footer">
-    Made with &hearts; & passion by code monkeys...
+    Made with &hearts; by code monkeys...
   </div>
 </ion-content>

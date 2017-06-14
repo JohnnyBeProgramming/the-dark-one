@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import {NavController} from 'ionic-angular';
 import {SyncService, ISyncItem} from "../../services/sync.service";
 
 @Component({
@@ -12,8 +11,7 @@ export class SyncPage {
   direction: string = '';
   items: ISyncItem[] = [];
 
-  constructor(public navCtrl: NavController,
-              public syncService: SyncService) {
+  constructor(public syncService: SyncService) {
 
     // Load the pending items (async)
     this.loading = true;

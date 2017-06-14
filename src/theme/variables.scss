@@ -23,6 +23,7 @@ $colors: (
   primary: #2c3e50,
   secondary: #f39c12,
   danger: #f53d3d,
+  disabled: #a1a1a1,
   light: #f4f4f4,
   dark: #222
 );
@@ -46,6 +47,11 @@ $tab-button-md-inactive-color: #8c8c8c;
 
 .tabs-dark .tab-button {
   color: color($colors, light) !important;
+  background-color: color($colors, primary) !important;
+}
+
+.tabs-dark .tab-button:disabled {
+  color: color($colors, disabled) !important;
   background-color: color($colors, primary) !important;
 }
 

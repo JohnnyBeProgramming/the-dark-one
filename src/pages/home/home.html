@@ -5,37 +5,51 @@
 </ion-header>
 
 <ion-content class="has-header" padding>
-  <div *ngIf="!authService.currentUser || authService.currentUser.isAnonymous">
-    <h2>
-      Welcome Stranger!
-    </h2>
-    <div class="show-list-numbers-and-dots">
-      <p>
-        This is a little <strong>prototype</strong> app that explores mobile concepts and integrations.
-      </p>
-      <p>
-        <button ion-button
-                (click)="login()"
-                [disabled]="loading"
-                block>
-          Login
-        </button>
-      </p>
-      <p>
-        Please sign in to access your personalised features.
-      </p>
+  <div [hidden]="!loading">
+    <div class="profile-info">
+      <img class="profile-image" [src]="imageDefault">
+      <h3 class="profile-name">
+        Loading Profile
+      </h3>
+      <div class="profile-description">
+        <em>Connecting to server...</em>
+      </div>
     </div>
   </div>
-  <div *ngIf="authService.currentUser && !authService.currentUser.isAnonymous">
-    <div id="profile-info" uiSref="about" uiSrefActive="active">
-      <img id="profile-image" [src]="authService.currentUser.photoURL || imageDefault">
-      <h3 id="profile-name">
-        {{ authService.currentUser.displayName || 'Unknown User' }}
-      </h3>
-      <div id="profile-description" *ngIf="authService.currentUser.email">
-        Email: <a href="mailto:{{ authService.currentUser.email }}">{{ authService.currentUser.email }}</a>
+  <div [hidden]="loading">
+    <div *ngIf="!authService.currentUser || authService.currentUser.isAnonymous">
+      <div class="profile-info">
+        <img class="profile-image" [src]="imageDefault">
+        <h3 class="profile-name">
+          Welcome Stranger!
+        </h3>
+        <div class="profile-description">
+          Please sign in for your personalised features.
+        </div>
+        <p>
+          <button ion-button
+                  (click)="login()"
+                  [disabled]="loading"
+                  block>
+            Login
+          </button>
+        </p>
+      </div>
+    </div>
+    <div *ngIf="authService.currentUser && !authService.currentUser.isAnonymous">
+      <div class="profile-info" [routerLink]="['/about']">
+        <img class="profile-image" [src]="authService.currentUser.photoURL || imageDefault">
+        <h3 class="profile-name">
+          {{ authService.currentUser.displayName || 'Unknown User' }}
+        </h3>
+        <div class="profile-description" *ngIf="authService.currentUser.email">
+          Email: <a href="mailto:{{ authService.currentUser.email }}">{{ authService.currentUser.email }}</a>
+        </div>
       </div>
     </div>
   </div>
   <hr/>
+  <p>
+    This is a little <strong>prototype</strong> app that explores mobile concepts and integrations.
+  </p>
 </ion-content>

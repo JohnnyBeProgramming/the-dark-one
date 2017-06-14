@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {TabsPage} from "./tabs/tabs";
+import {HomePage} from "./home/home";
 
 @Component({
   selector: 'page-index',

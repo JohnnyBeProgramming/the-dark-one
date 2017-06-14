@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import {NavController} from 'ionic-angular';
 import {FeatureService, IFeature} from "../../services/feature.service";
 
 @Component({
@@ -12,8 +11,7 @@ export class FeaturesPage {
   searchQuery: string = '';
   features: IFeature[] = [];
 
-  constructor(public navCtrl: NavController,
-              public featureService: FeatureService) {
+  constructor(public featureService: FeatureService) {
 
     // Load the feaures Async
     this.featureService
