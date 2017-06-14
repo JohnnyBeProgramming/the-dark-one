@@ -1,6 +1,8 @@
 import {Component} from '@angular/core';
-import {AuthenticationService} from "../../services/auth.service";
 import {Router} from "@angular/router";
+
+import {AuthService} from "../../providers/auth-service/auth-service";
+import {resources} from "../../app/app.resources";
 
 @Component({
   selector: 'page-about',
@@ -8,16 +10,26 @@ import {Router} from "@angular/router";
 })
 export class AboutPage {
 
+  public loading: boolean;
+  public imageDefault: string = resources.imageDefault;
+
   constructor(private router: Router,
-              private authenticationService: AuthenticationService) {
+              public authService: AuthService) {
+  }
+
+  login() {
+    // not logged in so redirect to login page
+    this.loading = true;
+    this.router.navigate(['/login']);
   }
 
   logout() {
     if (confirm('Are you sure you want to log out?')) {
-      localStorage.removeItem('currentUser');
-      this.authenticationService.logout();
-      //this.router.navigate(['/login']);
-      location.reload(true);
+      this.authService.signOut()
+        .then(() => {
+          this.router.navigate(['/login']);
+          location.reload(true);
+        });
     }
   }
 

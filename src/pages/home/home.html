@@ -5,10 +5,37 @@
 </ion-header>
 
 <ion-content class="has-header" padding>
-  <h1 style="color:#000000;">Welcome Back!</h1>
-  <div class="show-list-numbers-and-dots">
-    <p>
-      This is a little <strong>prototype</strong> app that explores mobile concepts and integrations.
-    </p>
+  <div *ngIf="!authService.currentUser || authService.currentUser.isAnonymous">
+    <h2>
+      Welcome Stranger!
+    </h2>
+    <div class="show-list-numbers-and-dots">
+      <p>
+        This is a little <strong>prototype</strong> app that explores mobile concepts and integrations.
+      </p>
+      <p>
+        <button ion-button
+                (click)="login()"
+                [disabled]="loading"
+                block>
+          Login
+        </button>
+      </p>
+      <p>
+        Please sign in to access your personalised features.
+      </p>
+    </div>
   </div>
+  <div *ngIf="authService.currentUser && !authService.currentUser.isAnonymous">
+    <div id="profile-info" uiSref="about" uiSrefActive="active">
+      <img id="profile-image" [src]="authService.currentUser.photoURL || imageDefault">
+      <h3 id="profile-name">
+        {{ authService.currentUser.displayName || 'Unknown User' }}
+      </h3>
+      <div id="profile-description" *ngIf="authService.currentUser.email">
+        Email: <a href="mailto:{{ authService.currentUser.email }}">{{ authService.currentUser.email }}</a>
+      </div>
+    </div>
+  </div>
+  <hr/>
 </ion-content>
