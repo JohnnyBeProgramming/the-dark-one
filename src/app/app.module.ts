@@ -4,6 +4,7 @@ import {HttpModule} from '@angular/http';
 import {BrowserModule} from '@angular/platform-browser';
 import {BaseRequestOptions} from '@angular/http';
 import {IonicApp, IonicModule, IonicErrorHandler} from 'ionic-angular';
+import {Geolocation} from '@ionic-native/geolocation';
 
 import {AngularFireModule} from 'angularfire2';
 import {AngularFireAuth} from 'angularfire2/auth';
@@ -90,7 +91,8 @@ import {MenuService} from "../providers/menu-service/menu-service";
     AngularFireAuth,
     AuthService,
     MenuService,
-    AuthGuard
+    AuthGuard,
+    Geolocation
   ]
 })
 export class AppModule {
