@@ -1,14 +1,30 @@
+import firebase from 'firebase'
+import {Camera} from 'ionic-native';
 import {Injectable} from '@angular/core';
 import {Platform, ActionSheetController} from 'ionic-angular';
+
+import {AuthService} from "../providers/auth-service/auth-service";
 
 @Injectable()
 export class CaptureService {
 
+  public isNative: boolean = false;
   public eventList: any[] = [];
 
   constructor(public platform: Platform,
-              public actionsheetCtrl: ActionSheetController){
-    console.info('~~> Capture service started...')
+              public authService: AuthService,
+              public actionsheetCtrl: ActionSheetController) {
+
+    // Try and detect if this is a browser
+    if (this.platform.is('core') || this.platform.is('mobileweb')) {
+      this.isNative = false;
+    } else {
+      this.isNative = true;
+    }
+
+    console.info('~~> Capture service started...', {
+      native: this.isNative
+    })
   }
 
   openMenu() {
@@ -51,6 +67,30 @@ export class CaptureService {
     actionSheet.present();
   }
 
+  createEvent(type: string, options?: Object) {
+    let event = {
+      type: type,
+      title: 'Pending Capture',
+    };
+    let promise = this.authService.getUser()
+      .then((user: firebase.User) => {
+        // Attach user info
+        Object.assign(event, {
+          user: {
+            name: user.displayName,
+            email: user.email,
+            photo: user.photoURL,
+          },
+        });
+        this.eventList.push(event);
+      });
+
+    // Apply options
+    Object.assign(event, options || {});
+
+    return promise;
+  }
+
   captureLocation() {
     this.eventList.push({
       type: 'location',
@@ -61,11 +101,61 @@ export class CaptureService {
   }
 
   capturePicture() {
-    this.eventList.push({
-      type: 'picture',
-      title: 'Captured Image',
-      text: 'This image was captured at 14:21 PM on the 25\'th of May 2017.',
-      image: ninja,
+    // Get the user info before starting a capture
+    return this.authService.getUser()
+      .then((user: firebase.User) => {
+        if (this.isNative) {
+          return this.capturePictureMobile();
+        } else {
+          return this.capturePictureBrowser()
+        }
+      });
+  }
+
+  capturePictureBrowser() {
+    let input: any = document.getElementById('PhotoPicker');
+    if (input) {
+      input.click(); // Deferred to input change event
+      return Promise.resolve(null);
+    } else {
+      return Promise.reject(new Error('PhotoPicker input not found.'));
+    }
+  }
+
+  capturePictureChanged(evt) {
+    evt.preventDefault();
+    if (evt.target.files && evt.target.files.length === 0) return;
+    var reader = new FileReader();
+    let imageFile = evt.target.files[0];
+    reader.readAsDataURL(imageFile);
+    reader.onload = () => {
+      // TODO: Apply EXIF
+      // this.applyEXIF(imageFile);
+      this.createEvent('picture', {
+        title: 'Browser Upload',
+        text: 'Uploaded from browser @ ' + new Date().toUTCString(),
+        image: reader.result
+      });
+    };
+    reader.onerror = (error) => {
+      console.log('Error: ', error);
+    };
+  }
+
+  capturePictureMobile() {
+    return Camera.getPicture({
+      destinationType: Camera.DestinationType.DATA_URL,
+      targetWidth: 1000,
+      targetHeight: 1000
+    }).then((imageData) => {
+      // Image Captured
+      return this.createEvent('picture', {
+        title: 'Captured Image',
+        text: 'Image captured on device @ ' + new Date().toUTCString(),
+        image: 'data:image/jpeg;base64,' + imageData, // imageData is a base64 encoded string
+      });
+    }, (err) => {
+      console.log(err);
     });
   }
 
@@ -75,6 +165,32 @@ export class CaptureService {
       title: 'Scanned Barcode',
       text: '7826348721394',
     });
+  }
+
+  applyEXIF(imageFile: File) {
+    // ToDo: Implement...
+    // - http://www.nihilogic.dk/labs/exif/exif.js
+    // - http://www.nihilogic.dk/labs/binaryajax/binaryajax.js
+    var width;
+    var height;
+    var binaryReader = new FileReader();
+    binaryReader.onloadend = function (d) {
+      /*
+       var exif, transform = "none";
+       exif=EXIF.readFromBinaryFile(createBinaryFile(d.target.result));
+
+       if (exif.Orientation === 8) {
+       width = img.height;
+       height = img.width;
+       transform = "left";
+       } else if (exif.Orientation === 6) {
+       width = img.height;
+       height = img.width;
+       transform = "right";
+       }
+       */
+    };
+    binaryReader.readAsArrayBuffer(imageFile);
   }
 
   clearCache() {

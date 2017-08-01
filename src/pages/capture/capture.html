@@ -25,31 +25,34 @@
   <div [ngSwitch]="category">
     <div *ngSwitchDefault>
       <button ion-button block (click)="captureService.openMenu()">
-        <ion-icon name="add-circle"></ion-icon> &nbsp;
+        <ion-icon name="add-circle"></ion-icon>
+        &nbsp;
         Capture Data
       </button>
     </div>
     <div *ngSwitchCase="'location'">
       <button ion-button block (click)="captureService.captureLocation()">
-        <ion-icon name="pin"></ion-icon> &nbsp;
+        <ion-icon name="pin"></ion-icon>
+        &nbsp;
         Current Location
       </button>
     </div>
     <div *ngSwitchCase="'picture'">
       <button ion-button block (click)="captureService.capturePicture()">
-        <ion-icon name="camera"></ion-icon> &nbsp;
+        <ion-icon name="camera"></ion-icon>
+        &nbsp;
         Take Picture
       </button>
     </div>
     <div *ngSwitchCase="'barcode'">
       <button ion-button block (click)="captureService.captureBarCode()">
-        <ion-icon name="barcode"></ion-icon> &nbsp;
+        <ion-icon name="barcode"></ion-icon>
+        &nbsp;
         Scan Barcode
       </button>
     </div>
 
   </div>
-
   <div *ngIf="!captureService.eventList.length">
     <p style="margin: 64px auto; text-align: center">
       <em>No items have been captured.</em>
@@ -61,7 +64,8 @@
         Recently captured data
       </ion-list-header>
 
-      <ion-item-sliding *ngFor="let event of captureService.eventList" [ngSwitch]="event.type" [hidden]="category && event.type !== category">
+      <ion-item-sliding *ngFor="let event of captureService.eventList" [ngSwitch]="event.type"
+                        [hidden]="category && event.type !== category">
 
         <ion-item *ngSwitchCase="'location'">
           <ion-thumbnail item-left>
@@ -128,5 +132,8 @@
       </ion-item-sliding>
 
     </ion-list>
+  </div>
+  <div style="width: 0; height: 0; overflow: hidden;">
+    <input id="PhotoPicker" type="file" capture="camera" accept="image/*" (change)="captureService.capturePictureChanged($event)" >
   </div>
 </ion-content>
