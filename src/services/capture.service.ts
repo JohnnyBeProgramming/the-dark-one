@@ -2,11 +2,12 @@ import firebase from 'firebase'
 import {Camera} from 'ionic-native';
 import {Injectable} from '@angular/core';
 import {Geolocation} from '@ionic-native/geolocation';
+import {Dialogs} from "@ionic-native/dialogs";
 import {Platform, ActionSheetController} from 'ionic-angular';
 
 import {AuthService} from "../providers/auth-service/auth-service";
 import {resources} from "../app/app.resources";
-import {Dialogs} from "@ionic-native/dialogs";
+import {SyncService} from "./sync.service";
 
 @Injectable()
 export class CaptureService {
@@ -20,6 +21,7 @@ export class CaptureService {
               private dialogs: Dialogs,
               private authService: AuthService,
               private geolocation: Geolocation,
+              private syncService: SyncService,
               private actionsheetCtrl: ActionSheetController) {
 
     // Try and detect if this is a browser
@@ -100,14 +102,12 @@ export class CaptureService {
       });
   }
 
-  attachEvent(event) {
-    // TODO: Attach event to something
-    this.removeEvent(event, true);
-  }
-
   uploadEvent(event) {
-    // ToDo: Upload event
-    this.removeEvent(event, true);
+    // Tell sync service to upload the event
+    this.syncService.uploadEvent(event)
+      .then(() => {
+        this.removeEvent(event, true);
+      });
   }
 
   removeEvent(event: any, confirmed?: boolean) {

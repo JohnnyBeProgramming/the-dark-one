@@ -43,12 +43,46 @@ const samples: ISyncItem[] = [
 @Injectable()
 export class SyncService {
 
-  constructor(public platform: Platform,
-              public actionsheetCtrl: ActionSheetController) {
+  private syncItems = [];
+
+  constructor(public platform: Platform) {
+
+    this.getUpdates()
+      .then((updateList) => {
+        this.syncItems = this.syncItems.concat(updateList);
+      });
+
+  }
+
+  getPendingItems() {
+    return Promise.resolve(this.syncItems);
+  }
+
+  getUpdates() {
+    return new Promise((resolve, reject) => {
+      resolve([
+        {
+          dir: 'downloads',
+          type: 'update',
+          icon: 'cloud-download',
+          title: 'Check for updates...',
+          text: 'Check online for any updates',
+        },
+      ]);
+    });
+  }
+
+  uploadEvent(event) {
+    return new Promise((resolve, reject) => {
+      const item = {dir: 'uploads'};
+      Object.assign(item, event);
+      this.syncItems.push(item);
+      resolve(item);
+    });
   }
 
   getSyncItems(direction: string = '', searchText: string = '') {
-    return Promise.resolve(samples)
+    return this.getPendingItems()
       .then((results) => {
         if (direction && direction.trim() != '') {
           // Filter on the specified search text.
@@ -72,15 +106,21 @@ export class SyncService {
   }
 
   syncAll() {
-    return Promise.resolve(samples.filter((item) => true));
+    return this.getPendingItems().then((items) => {
+      return items.filter((item) => true);
+    });
   }
 
   syncUp() {
-    return Promise.resolve(samples.filter((item) => item.dir === 'uploads'));
+    return this.getPendingItems().then((items) => {
+      return items.filter((item) => item.dir === 'uploads');
+    });
   }
 
   syncDown() {
-    return Promise.resolve(samples.filter((item) => item.dir === 'downloads'));
+    return this.getPendingItems().then((items) => {
+      return items.filter((item) => item.dir === 'downloads');
+    });
   }
 
 }
