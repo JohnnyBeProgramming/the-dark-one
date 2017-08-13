@@ -102,23 +102,31 @@ export class CaptureService {
 
   attachEvent(event) {
     // TODO: Attach event to something
-    this.removeEvent(event);
+    this.removeEvent(event, true);
   }
 
   uploadEvent(event) {
     // ToDo: Upload event
-    this.removeEvent(event);
+    this.removeEvent(event, true);
   }
 
-  removeEvent(event) {
-    this.confirm('Are you sure you want to remove this event?')
-      .then(() => {
-        const index = this.eventList.indexOf(event);
-        if (index >= 0) {
-          this.eventList.splice(index, 1);
-        }
-      })
-      .catch(e => console.log('Error displaying dialog', e));
+  removeEvent(event: any, confirmed?: boolean) {
+    const commit = () => {
+      const index = this.eventList.indexOf(event);
+      if (index >= 0) {
+        this.eventList.splice(index, 1);
+      }
+    };
+
+    if (confirmed) {
+      commit();
+    } else {
+      this.confirm('Are you sure you want to remove this event?')
+        .then(() => {
+          commit();
+        })
+        .catch(e => console.log('Error displaying dialog', e));
+    }
   }
 
   captureLocation() {
