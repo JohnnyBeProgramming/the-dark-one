@@ -6,7 +6,6 @@ import {CapturePage} from '../capture/capture';
 import {PluginsPage} from '../plugins/plugins';
 import {SyncPage} from '../sync/sync';
 import {AboutPage} from '../about/about';
-import {MenuService} from "../../services/menu.service";
 
 @Component({
   templateUrl: 'tabs.html'

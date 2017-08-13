@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Platform, ActionSheetController} from 'ionic-angular';
+import {Platform} from 'ionic-angular';
 
 export interface ISyncItem {
   dir: string;
@@ -9,36 +9,6 @@ export interface ISyncItem {
   title?: string;
   text?: string;
 }
-
-const samples: ISyncItem[] = [
-  {
-    dir: 'uploads',
-    type: 'location',
-    title: 'Johnny checked in',
-    text: 'Brussels, Belgium',
-    image: null,
-  },
-  {
-    dir: 'uploads',
-    type: 'picture',
-    title: 'Captured Image',
-    text: 'This image was captured at 14:21 PM on the 25\'th of May 2017.',
-    image: null,
-  },
-  {
-    dir: 'uploads',
-    type: 'barcode',
-    title: 'Scanned Barcode',
-    text: '7826348721394',
-  },
-  {
-    dir: 'downloads',
-    type: 'update',
-    icon: 'cloud-download',
-    title: 'Check for updates...',
-    text: 'Check online for any updates',
-  },
-];
 
 @Injectable()
 export class SyncService {
