@@ -2,54 +2,99 @@ import {Injectable} from '@angular/core';
 import {Platform, ActionSheetController} from 'ionic-angular';
 
 export interface IFeature {
+  locked?: boolean;
+  enabled?: boolean;
+  installed?: boolean;
   category: string;
   title: string;
   text: string;
+  link?: {
+    icon?: string;
+    label: string;
+  }
 }
-
-const samples: IFeature[] = [
-  {
-    category: 'capture',
-    title: 'QR Code Scanner',
-    text: 'Scan QR codes of URLs, Text Messages, Phone Numbers and more...',
-  },
-  {
-    category: 'manage',
-    title: 'Task Management',
-    text: 'Define assignments and complete tasks in your task list',
-  },
-  {
-    category: 'storage',
-    title: 'Cloud Storage Sync',
-    text: 'Synchronise your local data with one of the supported cloud providers.',
-  },
-];
 
 @Injectable()
 export class FeatureService {
 
+  private features: IFeature[] = null;
+
   constructor(public platform: Platform,
               public actionsheetCtrl: ActionSheetController) {
+
+    // Load the features (async)
+    this.loadFeatures().then((features) => {
+      this.features = features;
+    });
+  }
+
+  loadFeatures() {
+    if (this.features) {
+      return Promise.resolve(this.features);
+    }
+
+    // Define defaults...
+    // ToDo: Async load from cache
+    const staticFeatures: IFeature[] = [
+      {
+        enabled: false,
+        installed: true,
+        category: 'system',
+        title: 'Capture Service',
+        text: 'Enables you to capture data, such as pictures, locations or bar codes.',
+        link: {
+          icon: 'camera',
+          label: 'Capture',
+        }
+      },
+      {
+        locked: true,
+        enabled: true,
+        installed: true,
+        category: 'system',
+        title: 'Feature Services',
+        text: 'Manage your application plugins and features for this device.',
+        link: {
+          icon: 'logo-buffer',
+          label: 'Plugins',
+        }
+      },
+      {
+        enabled: false,
+        installed: true,
+        category: 'system',
+        title: 'Cloud Sync',
+        text: 'Synchronise your data to the cloud and download updates or features.',
+        link: {
+          icon: 'cloud',
+          label: 'Cloud Sync',
+        }
+      },
+    ];
+    return Promise.resolve(staticFeatures);
   }
 
   getFeatures(searchText: string = '', category: string = '') {
-    return Promise.resolve(samples)
+    const hasText = (target, lowerText) => {
+      return target && target.toLowerCase().indexOf(lowerText) > -1;
+    };
+    return this.loadFeatures()
       .then((results) => {
-        // if the value is an empty string don't filter the items
-        if (searchText && searchText.trim() != '') {
-          // Filter on the specified search text.
-          return results.filter((item) => {
-            return (item.title && item.title.toLowerCase().indexOf(searchText.toLowerCase()) > -1) ||
-              (item.text && item.text.toLowerCase().indexOf(searchText.toLowerCase()) > -1);
-          })
+        // Filter by category
+        if (category && category.trim() != '') {
+          return results.filter((item) => hasText(item.category, category.toLowerCase()))
         }
         return results;
       })
       .then((results) => {
-        if (category && category.trim() != '') {
+        // Filter on the search text
+        const term = !searchText ? '' : searchText.toLowerCase();
+        if (term && term.trim() != '') {
           // Filter on the specified search text.
           return results.filter((item) => {
-            return (item.category && item.category.toLowerCase().indexOf(category.toLowerCase()) > -1);
+            return hasText(item.title, term)
+              || hasText(item.text, term)
+              || hasText(item.category, term);
           })
         }
         return results;
