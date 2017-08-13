@@ -9,7 +9,7 @@ import {Geolocation} from '@ionic-native/geolocation';
 
 import {AngularFireModule} from 'angularfire2';
 import {AngularFireAuth} from 'angularfire2/auth';
-import {AuthService} from '../providers/auth-service/auth-service';
+import {AuthService} from '../services/auth.service';
 import {AuthGuard} from '../routes/auth.gaurd';
 
 export const firebaseConfig = {
@@ -32,7 +32,7 @@ import {IndexPage} from '../pages/index';
 import {TabsPage} from '../pages/tabs/tabs';
 import {HomePage} from '../pages/home/home';
 import {CapturePage} from '../pages/capture/capture';
-import {FeaturesPage} from '../pages/features/features';
+import {PluginsPage} from '../pages/plugins/plugins';
 import {SyncPage} from '../pages/sync/sync';
 import {AboutPage} from '../pages/about/about';
 import {LoginPage} from '../pages/login/index';
@@ -41,7 +41,7 @@ import {FeatureService} from "../services/feature.service";
 import {CaptureService} from "../services/capture.service";
 import {SyncService} from "../services/sync.service";
 import {StorageService} from "../services/storage.service";
-import {MenuService} from "../providers/menu-service/menu-service";
+import {MenuService} from "../services/menu.service";
 
 @NgModule({
   imports: [
@@ -58,7 +58,7 @@ import {MenuService} from "../providers/menu-service/menu-service";
     HomePage,
     LoginPage,
     CapturePage,
-    FeaturesPage,
+    PluginsPage,
     SyncPage,
     AboutPage,
     TabsPage
@@ -70,7 +70,7 @@ import {MenuService} from "../providers/menu-service/menu-service";
     HomePage,
     LoginPage,
     CapturePage,
-    FeaturesPage,
+    PluginsPage,
     SyncPage,
     AboutPage,
     TabsPage

@@ -6,7 +6,7 @@ import {AuthGuard} from '../routes/auth.gaurd';
 import {AboutPage} from "../pages/about/about";
 import {CapturePage} from "../pages/capture/capture";
 import {SyncPage} from "../pages/sync/sync";
-import {FeaturesPage} from "../pages/features/features";
+import {PluginsPage} from "../pages/plugins/plugins";
 
 const appRoutes: Routes = [
   {
@@ -24,8 +24,8 @@ const appRoutes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'features',
-    component: FeaturesPage,
+    path: 'plugins',
+    component: PluginsPage,
     canActivate: [AuthGuard],
   },
   {

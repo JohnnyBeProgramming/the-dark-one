@@ -5,7 +5,7 @@ import {Geolocation} from '@ionic-native/geolocation';
 import {Dialogs} from "@ionic-native/dialogs";
 import {Platform, ActionSheetController} from 'ionic-angular';
 
-import {AuthService} from "../providers/auth-service/auth-service";
+import {AuthService} from "./auth.service";
 import {resources} from "../app/app.resources";
 import {SyncService} from "./sync.service";
 

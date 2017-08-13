@@ -1,7 +1,7 @@
 import {Component, ViewChild} from '@angular/core';
 import {Nav} from 'ionic-angular';
 
-import {MenuService} from "../providers/menu-service/menu-service";
+import {MenuService} from "../services/menu.service";
 import {TabsPage} from "./tabs/tabs";
 
 @Component({

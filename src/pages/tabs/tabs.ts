@@ -3,10 +3,10 @@ import {ActivatedRoute} from "@angular/router";
 
 import {HomePage} from '../home/home';
 import {CapturePage} from '../capture/capture';
-import {FeaturesPage} from '../features/features';
+import {PluginsPage} from '../plugins/plugins';
 import {SyncPage} from '../sync/sync';
 import {AboutPage} from '../about/about';
-
+import {MenuService} from "../../services/menu.service";
 
 @Component({
   templateUrl: 'tabs.html'
@@ -17,7 +17,7 @@ export class TabsPage implements OnInit, OnDestroy {
 
   tab1Root = HomePage;
   tab2Root = CapturePage;
-  tab3Root = FeaturesPage;
+  tab3Root = PluginsPage;
   tab4Root = SyncPage;
   tab5Root = AboutPage;
 
@@ -26,7 +26,7 @@ export class TabsPage implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
-      console.log('~~> Params: ', params);
+      // console.log('~~> Params: ', params);
     });
   }
 
