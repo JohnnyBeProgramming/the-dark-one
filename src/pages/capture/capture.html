@@ -17,7 +17,7 @@
     <ion-segment-button value="picture">
       Picture
     </ion-segment-button>
-    <ion-segment-button value="barcode">
+    <ion-segment-button value="barcode" [disabled]="true">
       Barcode
     </ion-segment-button>
   </ion-segment>
@@ -45,7 +45,7 @@
       </button>
     </div>
     <div *ngSwitchCase="'barcode'">
-      <button ion-button block (click)="captureService.captureBarCode()">
+      <button ion-button block (click)="captureService.captureBarCode()" >
         <ion-icon name="barcode"></ion-icon>
         &nbsp;
         Scan Barcode
@@ -78,8 +78,13 @@
           <h2 *ngIf="event.title">{{ event.title }}</h2>
           <ion-note item-end>5:47 am</ion-note>
           <ion-note *ngIf="event.text">
-            <ion-icon name='pin'></ion-icon>
             {{ event.text }}
+            <div *ngIf="!!event.location.coords">
+              <ion-icon name='pin'></ion-icon>
+              <a target="_blank" href="https://www.google.be/maps/@{{ event.location.coords.latitude }},{{ event.location.coords.longitude }}z">
+                {{ event.location.coords.latitude }},{{ event.location.coords.longitude }}
+              </a>
+            </div>
           </ion-note>
         </ion-item>
 
@@ -91,7 +96,15 @@
           </ion-thumbnail>
           <h2 *ngIf="event.title">{{ event.title }}</h2>
           <ion-note item-end>5:47 am</ion-note>
-          <ion-note *ngIf="event.text">{{ event.text }}</ion-note>
+          <ion-note *ngIf="event.text">
+            {{ event.text }}
+            <div *ngIf="!!event.image">
+              <ion-icon name='link'></ion-icon>
+              <a target="_blank" href="{{ event.image }}">
+                Open Image
+              </a>
+            </div>
+          </ion-note>
         </ion-item>
 
         <ion-item *ngSwitchCase="'barcode'">
@@ -114,17 +127,17 @@
         </ion-item>
 
         <ion-item-options side="left">
-          <button ion-button color="primary">
+          <button ion-button color="primary" (click)="captureService.uploadEvent(event)">
             <ion-icon name="cloud-upload"></ion-icon>
             Upload
           </button>
-          <button ion-button color="secondary">
+          <button ion-button color="secondary" (click)="captureService.attachEvent(event)">
             <ion-icon name="add-circle"></ion-icon>
             Attach
           </button>
         </ion-item-options>
         <ion-item-options side="right">
-          <button ion-button color="danger">
+          <button ion-button color="danger" (click)="captureService.removeEvent(event)">
             <ion-icon name="trash"></ion-icon>
             Discard
           </button>

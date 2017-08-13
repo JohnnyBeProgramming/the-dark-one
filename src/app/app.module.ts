@@ -3,6 +3,7 @@ import {FormsModule}    from '@angular/forms';
 import {HttpModule} from '@angular/http';
 import {BrowserModule} from '@angular/platform-browser';
 import {BaseRequestOptions} from '@angular/http';
+import {Dialogs} from '@ionic-native/dialogs';
 import {IonicApp, IonicModule, IonicErrorHandler} from 'ionic-angular';
 import {Geolocation} from '@ionic-native/geolocation';
 
@@ -81,6 +82,7 @@ import {MenuService} from "../providers/menu-service/menu-service";
       provide: ErrorHandler,
       useClass: IonicErrorHandler
     },
+    Dialogs,
     CaptureService,
     FeatureService,
     SyncService,

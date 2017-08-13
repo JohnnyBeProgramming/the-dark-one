@@ -6,6 +6,7 @@ import {Platform, ActionSheetController} from 'ionic-angular';
 
 import {AuthService} from "../providers/auth-service/auth-service";
 import {resources} from "../app/app.resources";
+import {Dialogs} from "@ionic-native/dialogs";
 
 @Injectable()
 export class CaptureService {
@@ -15,10 +16,11 @@ export class CaptureService {
   public location: any = {};
   public locationWatch: any;
 
-  constructor(public platform: Platform,
-              public authService: AuthService,
-              public geolocation: Geolocation,
-              public actionsheetCtrl: ActionSheetController) {
+  constructor(private platform: Platform,
+              private dialogs: Dialogs,
+              private authService: AuthService,
+              private geolocation: Geolocation,
+              private actionsheetCtrl: ActionSheetController) {
 
     // Try and detect if this is a browser
     if (this.platform.is('core') || this.platform.is('mobileweb')) {
@@ -51,13 +53,15 @@ export class CaptureService {
             this.capturePicture();
           }
         },
-        {
-          text: 'Scan Barcode',
-          icon: !this.platform.is('ios') ? 'barcode' : null,
-          handler: () => {
-            this.captureBarCode();
-          }
-        },
+        /*
+         {
+         text: 'Scan Barcode',
+         icon: !this.platform.is('ios') ? 'barcode' : null,
+         handler: () => {
+         this.captureBarCode();
+         }
+         },
+         */
         {
           text: 'Clear List',
           role: 'cancel', // will always sort to be on the bottom
@@ -85,16 +89,36 @@ export class CaptureService {
       .then((user: firebase.User) => {
         // Attach user info
         Object.assign(event, {
-          user: {
-            name: user.displayName,
-            email: user.email,
-            photo: user.photoURL,
-          },
+          user: user ? {
+              name: user.displayName,
+              email: user.email,
+              photo: user.photoURL,
+            } : null,
         });
         this.eventList.push(event);
         return event;
       });
-    ;
+  }
+
+  attachEvent(event) {
+    // TODO: Attach event to something
+    this.removeEvent(event);
+  }
+
+  uploadEvent(event) {
+    // ToDo: Upload event
+    this.removeEvent(event);
+  }
+
+  removeEvent(event) {
+    this.confirm('Are you sure you want to remove this event?')
+      .then(() => {
+        const index = this.eventList.indexOf(event);
+        if (index >= 0) {
+          this.eventList.splice(index, 1);
+        }
+      })
+      .catch(e => console.log('Error displaying dialog', e));
   }
 
   captureLocation() {
@@ -256,5 +280,21 @@ export class CaptureService {
 
   clearCache() {
     this.eventList = [];
+  }
+
+  confirm(message: string) {
+    if (this.isNative) {
+      // Native dislog
+      return this.dialogs.alert(message);
+    } else {
+      // Web dialog
+      return new Promise((resolve, reject) => {
+        if (confirm(message)) {
+          resolve();
+        } else {
+          reject();
+        }
+      });
+    }
   }
 }
